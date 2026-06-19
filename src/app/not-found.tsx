@@ -1,0 +1,2 @@
+import { ButtonLink } from "@/components/ui/button-link";
+export default function NotFound() { return <section className="page-hero"><div className="shell page-hero-inner"><p className="eyebrow eyebrow-light">404 · Space not found</p><h1>This unit appears to be empty.</h1><p>The page may have moved, but the storage team is right where you left us.</p><div className="hero-actions"><ButtonLink href="/" variant="light">Back home</ButtonLink><ButtonLink href="/storage-types/" variant="secondary">Browse storage</ButtonLink></div></div></section>; }
