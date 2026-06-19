@@ -1,4 +1,8 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# New York S. Storage
+
+Modern rebuild of [newyorksstorage.com](https://newyorksstorage.com/) using Next.js 15, TypeScript, Tailwind CSS, and Framer Motion.
+
+The project is currently at the foundation and migration-planning stage. Read [the content and SEO migration plan](./docs/MIGRATION_PLAN.md) before implementing production pages.
 
 ## Getting Started
 
