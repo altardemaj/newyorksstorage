@@ -1,7 +1,9 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { useLayoutEffect, useRef } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Icon } from "@/components/ui/icon";
@@ -16,22 +18,35 @@ const floatingBoxes = [
 export function CinematicHero() {
   const sectionRef = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
-  const imageY = useTransform(scrollYProgress, [0, 1], [0, 110]);
-  const copyY = useTransform(scrollYProgress, [0, 1], [0, 48]);
+
+  useLayoutEffect(() => {
+    if (reduceMotion || !sectionRef.current) return;
+    gsap.registerPlugin(ScrollTrigger);
+    const context = gsap.context(() => {
+      const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
+      intro.fromTo(".cinematic-image", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 1.35 })
+        .from(".hero-word", { yPercent: 115, opacity: 0, duration: 1.1, stagger: .11 }, "-=.72")
+        .from(".hero-kicker", { opacity: 0, y: 18, duration: .55 }, "-=.8")
+        .from(".cinematic-copy > p, .cinematic-copy .hero-actions", { opacity: 0, y: 22, duration: .65, stagger: .09 }, "-=.52");
+      gsap.to(".cinematic-image img", { scale: 1.16, yPercent: 7, ease: "none", scrollTrigger: { trigger: sectionRef.current, start: "top top", end: "bottom top", scrub: 1 } });
+      gsap.to(".floating-quote-card", { y: -80, ease: "none", scrollTrigger: { trigger: sectionRef.current, start: "top top", end: "bottom top", scrub: 1 } });
+      gsap.to(".cinematic-grid", { xPercent: -8, ease: "none", scrollTrigger: { trigger: sectionRef.current, start: "top top", end: "bottom top", scrub: 1 } });
+    }, sectionRef);
+    return () => context.revert();
+  }, [reduceMotion]);
 
   return <section className="cinematic-hero" ref={sectionRef}>
     <div className="cinematic-grid" aria-hidden="true" />
-    <motion.div className="cinematic-image" style={reduceMotion ? undefined : { y: imageY }}><Image src="/nyc-storage-hero.jpg" alt="Premium storage units inside the New York S. Storage facility" fill priority sizes="100vw" /></motion.div>
+    <div className="cinematic-image"><Image src="/nyc-storage-hero.jpg" alt="Premium storage units inside the New York S. Storage facility" fill priority sizes="100vw" /></div>
     <div className="cinematic-shade" />
     <div className="cinematic-glow cinematic-glow-one" /><div className="cinematic-glow cinematic-glow-two" />
     <div className="shell cinematic-inner">
-      <motion.div className="cinematic-copy" style={reduceMotion ? undefined : { y: copyY }} initial={reduceMotion ? false : { opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .8, ease: [0.22, 1, 0.36, 1] }}>
+      <div className="cinematic-copy">
         <div className="hero-kicker"><span>New York City</span><span>Storage, reimagined</span></div>
-        <h1>Make space.<br /><em>Keep the life.</em></h1>
+        <h1><span className="hero-word-wrap"><span className="hero-word">Make space.</span></span><span className="hero-word-wrap"><em className="hero-word">Keep the life.</em></span></h1>
         <p>A cinematic storage experience in Harlem—expert help, flexible units, pickup, and delivery shaped around the way New Yorkers actually move.</p>
         <div className="hero-actions"><ButtonLink href="/get-a-quote/" variant="light" showArrow>Build my storage plan</ButtonLink><ButtonLink href="/storage-types/" variant="secondary">Explore solutions</ButtonLink></div>
-      </motion.div>
+      </div>
 
       <div className="box-stage" aria-hidden="true">
         {floatingBoxes.map((box) => <motion.div key={box.className} className={`box-3d ${box.className}`} animate={reduceMotion ? undefined : { y: [0, -18, 0], rotate: [-4, 2, -4] }} transition={{ duration: box.duration, delay: box.delay, repeat: Infinity, ease: "easeInOut" }}><span className="box-front">NYSS</span><span className="box-side"/><span className="box-top"/><i /></motion.div>)}
@@ -48,4 +63,3 @@ export function CinematicHero() {
     </div>
   </section>;
 }
-
