@@ -1,8 +1,7 @@
-import type { Metadata } from "next";
 import { PageHero } from "@/components/sections/page-hero";
-import { site } from "@/data/site";
+import { createPageMetadata, site } from "@/data/site";
 
-export const metadata: Metadata = { title: "Terms & Privacy", description: "Privacy and data-use information for New York S. Storage website visitors and customers.", alternates: { canonical: "/terms-conditions/" } };
+export const metadata = createPageMetadata("Terms & Privacy", "Privacy and data-use information for New York S. Storage website visitors and customers.", "/terms-conditions");
 export default function TermsPage() { return <><PageHero eyebrow="Terms & privacy" title="How we handle your information" description="This policy explains the information New York S. Storage may collect, why it is used, and the choices available to you." compact /><section className="section content-section"><article className="shell content-narrow prose"><p><strong>Effective March 16, 2026.</strong></p>
   <h2>Privacy policy</h2><p>This policy applies to newyorksstorage.com and New York S. Storage. By using this website, you consent to the data practices described here. New York S. Storage does not sell or rent its customer lists or personal information.</p>
   <h2>Information we may collect</h2><p>We collect personal information only when you voluntarily provide it, such as when requesting a quote, contacting us, registering for an account, purchasing products or services, or communicating by email or text. This may include your name, mailing address, email address, phone number, demographic details, billing information, and details about the services you request.</p><p>We may also collect technical information such as IP address, browser type, domain name, access time, and referring website address to operate the website, maintain service quality, and understand general usage.</p>

@@ -16,7 +16,7 @@ export type StorageService = {
 
 export const storageServices: StorageService[] = [
   {
-    slug: "self-storage-nyc", title: "Self Storage NYC", shortTitle: "Self Storage", href: "/storage-types/self-storage-nyc/", category: "personal", icon: "box", eyebrow: "Flexible space, right in Harlem",
+    slug: "self-storage-nyc", title: "Self Storage NYC", shortTitle: "Self Storage", href: "/storage-types/self-storage-nyc", category: "personal", icon: "box", eyebrow: "Flexible space, right in Harlem",
     description: "Flexible storage for furniture, seasonal items, personal effects, and everything that no longer fits at home.",
     longDescription: "Our comprehensive self storage solutions give New Yorkers a practical place for belongings during a move, renovation, or everyday declutter. Choose the space you need, then speak with a storage advisor about packing, pickup, and access.",
     features: [
@@ -27,7 +27,7 @@ export const storageServices: StorageService[] = [
     ],
   },
   {
-    slug: "business-storage-nyc", title: "Business Storage NYC", shortTitle: "Business Storage", href: "/storage-types/business-storage-nyc/", category: "business", icon: "building", eyebrow: "Room for your business to grow",
+    slug: "business-storage-nyc", title: "Business Storage NYC", shortTitle: "Business Storage", href: "/storage-types/business-storage-nyc", category: "business", icon: "building", eyebrow: "Room for your business to grow",
     description: "A flexible home for inventory, records, furniture, equipment, and the things taking over your workplace.",
     longDescription: "Whether you are managing inventory, archiving documents, clearing unused office furniture, or changing how your team works, we can help you find a unit that fits the job without adding permanent office overhead.",
     features: [
@@ -38,7 +38,7 @@ export const storageServices: StorageService[] = [
     ],
   },
   {
-    slug: "moving-storage-nyc", title: "Moving Storage NYC", shortTitle: "Moving Storage", href: "/storage-types/moving-storage-nyc/", category: "moving", icon: "truck", eyebrow: "A smoother space between addresses",
+    slug: "moving-storage-nyc", title: "Moving Storage NYC", shortTitle: "Moving Storage", href: "/storage-types/moving-storage-nyc", category: "moving", icon: "truck", eyebrow: "A smoother space between addresses",
     description: "Short- or long-term storage that keeps your belongings safe when move-out and move-in dates do not line up.",
     longDescription: "Moving in New York rarely follows a perfect timeline. Our Harlem facility gives you a secure place for furniture, boxes, and valuables while you wait for the next set of keys, with pickup and return delivery options available.",
     features: [
@@ -49,7 +49,7 @@ export const storageServices: StorageService[] = [
     ],
   },
   {
-    slug: "climate-controlled-storage-nyc", title: "Climate-Controlled Storage NYC", shortTitle: "Climate-Controlled", href: "/storage-types/climate-controlled-storage-nyc/", category: "climate", icon: "snowflake", eyebrow: "Extra care for sensitive belongings",
+    slug: "climate-controlled-storage-nyc", title: "Climate-Controlled Storage NYC", shortTitle: "Climate-Controlled", href: "/storage-types/climate-controlled-storage-nyc", category: "climate", icon: "snowflake", eyebrow: "Extra care for sensitive belongings",
     description: "A more stable storage environment for belongings that need protection from New York's seasonal swings.",
     longDescription: "Climate-controlled storage can be a smart choice for artwork, antiques, documents, and other temperature-sensitive belongings. Our advisors can help you decide whether it makes sense for what you plan to store.",
     features: [
@@ -60,7 +60,7 @@ export const storageServices: StorageService[] = [
     ],
   },
   {
-    slug: "student-storage-nyc", title: "Student Storage NYC", shortTitle: "Student Storage", href: "/storage-types/student-storage-nyc/", category: "personal", icon: "book", eyebrow: "Less stuff between semesters",
+    slug: "student-storage-nyc", title: "Student Storage NYC", shortTitle: "Student Storage", href: "/storage-types/student-storage-nyc", category: "personal", icon: "book", eyebrow: "Less stuff between semesters",
     description: "Practical storage for books, clothes, small furniture, and dorm essentials during breaks, moves, or study abroad.",
     longDescription: "Instead of hauling everything home between semesters, keep school supplies, clothing, and apartment essentials in New York. We offer a range of unit sizes and can help you estimate the space you need.",
     features: [
@@ -71,7 +71,7 @@ export const storageServices: StorageService[] = [
     ],
   },
   {
-    slug: "apartment-storage-nyc", title: "Apartment Storage NYC", shortTitle: "Apartment Storage", href: "/storage-types/apartment-storage-nyc/", category: "personal", icon: "home", eyebrow: "More apartment. Less clutter.",
+    slug: "apartment-storage-nyc", title: "Apartment Storage NYC", shortTitle: "Apartment Storage", href: "/storage-types/apartment-storage-nyc", category: "personal", icon: "home", eyebrow: "More apartment. Less clutter.",
     description: "Long- or short-term space for furniture, appliances, seasonal gear, and everything your closets cannot handle.",
     longDescription: "New York apartments ask a lot from every square foot. Store bulky furniture, appliances, seasonal items, and renovation overflow nearby, with pickup and delivery options when you need an extra hand.",
     features: [
@@ -82,7 +82,7 @@ export const storageServices: StorageService[] = [
     ],
   },
   {
-    slug: "antique-storage-nyc", title: "Antique Storage NYC", shortTitle: "Antique Storage", href: "/storage-types/antique-storage-nyc/", category: "specialty", icon: "vase", eyebrow: "Thoughtful storage for irreplaceable pieces",
+    slug: "antique-storage-nyc", title: "Antique Storage NYC", shortTitle: "Antique Storage", href: "/storage-types/antique-storage-nyc", category: "specialty", icon: "vase", eyebrow: "Thoughtful storage for irreplaceable pieces",
     description: "Careful packing and storage options for antique furniture, decorative objects, and collections of many sizes.",
     longDescription: "Antiques deserve a little more thought than an ordinary box. Our storage advisors can discuss professional wrapping, preservation materials, unit sizing, and climate-controlled options for your pieces.",
     features: [
@@ -93,7 +93,7 @@ export const storageServices: StorageService[] = [
     ],
   },
   {
-    slug: "art-film-storage-nyc", title: "Art & Film Storage NYC", shortTitle: "Art & Film Storage", href: "/storage-types/art-film-storage-nyc/", category: "specialty", icon: "film", eyebrow: "Space for creative work and equipment",
+    slug: "art-film-storage-nyc", title: "Art & Film Storage NYC", shortTitle: "Art & Film Storage", href: "/storage-types/art-film-storage-nyc", category: "specialty", icon: "film", eyebrow: "Space for creative work and equipment",
     description: "Storage options for artwork, production materials, props, equipment, and creative archives in New York City.",
     longDescription: "Creative projects can quickly outgrow a studio or production space. Our team can help assess the room needed for artwork, props, equipment, materials, and archives, including climate-controlled options where appropriate.",
     features: [
@@ -104,7 +104,7 @@ export const storageServices: StorageService[] = [
     ],
   },
   {
-    slug: "pharmaceutical-storage-nyc", title: "Pharmaceutical Storage NYC", shortTitle: "Pharmaceutical Storage", href: "/storage-types/pharmaceutical-storage-nyc/", category: "specialty", icon: "medical", eyebrow: "Specialty space for business equipment",
+    slug: "pharmaceutical-storage-nyc", title: "Pharmaceutical Storage NYC", shortTitle: "Pharmaceutical Storage", href: "/storage-types/pharmaceutical-storage-nyc", category: "specialty", icon: "medical", eyebrow: "Specialty space for business equipment",
     description: "Storage options for pharmaceutical-industry equipment and business materials, with climate-controlled units available.",
     longDescription: "Companies with pharmaceutical equipment or business materials often need stable, organized overflow space. Speak with our team about unit sizes, climate-controlled availability, security, and the specific items you plan to store.",
     features: [

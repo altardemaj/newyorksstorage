@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
 import { PageHero } from "@/components/sections/page-hero";
 import { ServiceExplorer } from "@/components/sections/service-explorer";
 import { CtaSection } from "@/components/sections/cta-section";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Icon } from "@/components/ui/icon";
+import { createPageMetadata } from "@/data/site";
 
-export const metadata: Metadata = { title: "Storage Solutions in NYC", description: "Explore personal, moving, business, climate-controlled, student, apartment, antique, art, film, and pharmaceutical storage options in Harlem, NYC.", alternates: { canonical: "/storage-types/" } };
+export const metadata = createPageMetadata("Storage Solutions in NYC", "Explore personal, moving, business, climate-controlled, student, apartment, antique, art, film, and pharmaceutical storage options in Harlem, NYC.", "/storage-types");
 
 export default function StorageTypesPage() {
   return <><PageHero eyebrow="Find a unit" title="Storage solutions for real New York life" description="Search and filter flexible storage for apartments, moves, businesses, students, valuable collections, and specialty equipment." />

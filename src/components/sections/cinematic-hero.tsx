@@ -45,7 +45,7 @@ export function CinematicHero() {
         <div className="hero-kicker"><span>New York City</span><span>Storage, reimagined</span></div>
         <h1><span className="hero-word-wrap"><span className="hero-word">Make space.</span></span><span className="hero-word-wrap"><em className="hero-word">Keep the life.</em></span></h1>
         <p>A cinematic storage experience in Harlem—expert help, flexible units, pickup, and delivery shaped around the way New Yorkers actually move.</p>
-        <div className="hero-actions"><ButtonLink href="/get-a-quote/" variant="light" showArrow>Build my storage plan</ButtonLink><ButtonLink href="/storage-types/" variant="secondary">Explore solutions</ButtonLink></div>
+        <div className="hero-actions"><ButtonLink href="/get-a-quote" variant="light" showArrow>Build my storage plan</ButtonLink><ButtonLink href="/storage-types" variant="secondary">Explore solutions</ButtonLink></div>
       </div>
 
       <div className="box-stage" aria-hidden="true">
