@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   title: { default: "Self Storage in NYC & Harlem | New York S. Storage", template: "%s | New York S. Storage" },
   description: "Flexible self storage in Harlem with unit sizes for apartments, moves, students, businesses, and specialty belongings. Get a free quote from New York S. Storage.",
   alternates: { canonical: `${site.url}/` },
+  verification: { google: "pFyhnxtzsFQ0upr4htgGTDU3BwChkXa6gD3RxYgfKoI" },
   openGraph: { type: "website", locale: "en_US", siteName: site.name, title: "Self Storage in NYC & Harlem | New York S. Storage", description: "Flexible Manhattan storage, experienced advisors, packing, pickup, and delivery options.", url: `${site.url}/`, images: [{ url: "/nyc-storage-hero.jpg", width: 1200, height: 800, alt: "Organized storage boxes in a New York apartment" }] },
   twitter: { card: "summary_large_image", title: "Self Storage in NYC & Harlem | New York S. Storage", description: "Flexible Manhattan storage with help from experienced local advisors.", images: ["/nyc-storage-hero.jpg"] },
 };
