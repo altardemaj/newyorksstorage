@@ -28,17 +28,19 @@ const socialImage = {
 } as const;
 
 export function createPageMetadata(title: string, description: string, path: string): Metadata {
+  const canonicalPath = path === "/" ? "/" : path.replace(/\/+$/, "");
   return {
     title,
     description,
-    alternates: { canonical: path },
+    alternates: { canonical: canonicalPath },
+    robots: { index: true, follow: true },
     openGraph: {
       type: "website",
       locale: "en_US",
       siteName: site.name,
       title: `${title} | ${site.name}`,
       description,
-      url: path,
+      url: canonicalPath,
       images: [socialImage],
     },
   };

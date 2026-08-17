@@ -2,6 +2,8 @@ import Link from "next/link";
 import { PageHero } from "@/components/sections/page-hero";
 import { CtaSection } from "@/components/sections/cta-section";
 import { Icon } from "@/components/ui/icon";
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbSchema, webPageSchema } from "@/data/schema";
 import { createPageMetadata } from "@/data/site";
 
 export const metadata = createPageMetadata("Storage 101", "Plan a smoother storage move with practical guidance on unit sizes, packing, climate control, pickup, and access.", "/storage-101");
@@ -13,6 +15,14 @@ const resources = [
   { n:"05", title:"Keep access in mind", text:"Place items you may need sooner near the front and leave a narrow path through larger units.", href:"/contact-us" },
   { n:"06", title:"Ask before guessing", text:"A quick conversation with an advisor can prevent renting too much—or too little—space.", href:"/get-a-quote" },
 ];
-export default function Storage101Page() { return <><PageHero eyebrow="Storage 101" title="A smarter start to storing your things" description="Practical guidance for choosing a unit, packing carefully, and making move-in day feel much less improvised." />
-  <section className="section"><div className="shell"><div className="resource-grid">{resources.map((item)=><article className="resource-card" key={item.n}><span>{item.n}</span><h3>{item.title}</h3><p>{item.text}</p><Link href={item.href}>Learn more <Icon name="arrow" /></Link></article>)}</div></div></section><CtaSection title="Have a storage question we missed?" /></> }
-
+export default function Storage101Page() {
+  return <>
+    <JsonLd data={[
+      webPageSchema({ path: "/storage-101", name: "Storage 101 | New York S. Storage", description: "Plan a smoother storage move with practical guidance on unit sizes, packing, climate control, pickup, and access." }),
+      breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Storage 101", path: "/storage-101" }]),
+    ]} />
+    <PageHero eyebrow="Storage 101" title="A smarter start to storing your things" description="Practical guidance for choosing a unit, packing carefully, and making move-in day feel much less improvised." />
+    <section className="section"><div className="shell"><div className="resource-grid">{resources.map((item)=><article className="resource-card" key={item.n}><span>{item.n}</span><h3>{item.title}</h3><p>{item.text}</p><Link href={item.href}>Learn more <Icon name="arrow" /></Link></article>)}</div></div></section>
+    <CtaSection title="Have a storage question we missed?" />
+  </>;
+}
