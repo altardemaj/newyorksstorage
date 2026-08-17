@@ -1,4 +1,40 @@
 import { site } from "@/data/site";
+
+const referralOptions = [
+  "Google",
+  "Stored with New York S. Storage before",
+  "Live locally / saw facility",
+  "Building management / super",
+  "Social media",
+  "Friend",
+  "Saw truck",
+  "Real estate agent",
+  "Yelp",
+  "Bing",
+  "Other",
+] as const;
+
 export function ContactForm() {
-  return <form className="contact-form" action={`mailto:${site.email}`} method="post" encType="text/plain"><div className="field-grid"><label>First name<input required name="first-name" /></label><label>Last name<input required name="last-name" /></label><label>Email<input required name="email" type="email" /></label><label>Phone<input name="phone" type="tel" /></label><label className="field-wide">Your message<textarea required name="message" rows={6} /></label></div><button className="button button-primary" type="submit">Prepare message</button><p className="form-note">This opens your email app so you can review the message before sending.</p></form>;
+  return (
+    <form className="contact-form" action={`mailto:${site.email}`} method="post" encType="text/plain">
+      <div className="field-grid">
+        <label>First name<input required name="first-name" /></label>
+        <label>Last name<input required name="last-name" /></label>
+        <label>Email<input required name="email" type="email" /></label>
+        <label>Phone<input name="phone" type="tel" /></label>
+        <label className="field-wide">Your message<textarea required name="message" rows={6} /></label>
+        <label className="field-wide">
+          How did you hear about us?
+          <select required name="how-did-you-hear-about-us" defaultValue="">
+            <option value="" disabled>Select an option</option>
+            {referralOptions.map((option) => (
+              <option key={option} value={option}>{option}</option>
+            ))}
+          </select>
+        </label>
+      </div>
+      <button className="button button-primary" type="submit">Prepare message</button>
+      <p className="form-note">This opens your email app so you can review the message before sending.</p>
+    </form>
+  );
 }

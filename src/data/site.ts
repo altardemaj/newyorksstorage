@@ -28,11 +28,16 @@ const socialImage = {
 } as const;
 
 export function createPageMetadata(title: string, description: string, path: string): Metadata {
-  const canonicalPath = path === "/" ? "/" : path.replace(/\/+$/, "");
+  const isHome = path === "/" || path === "";
+  // Homepage canonical must be https://www.newyorksstorage.com/ (trailing slash)
+  // to match sitemap + schema. Next metadata resolution strips root "/" when
+  // trailingSlash:false, so homepage canonical is emitted via <link> in page.tsx.
+  const canonical = isHome ? `${site.url}/` : path.replace(/\/+$/, "");
+
   return {
     title,
     description,
-    alternates: { canonical: canonicalPath },
+    ...(isHome ? {} : { alternates: { canonical } }),
     robots: { index: true, follow: true },
     openGraph: {
       type: "website",
@@ -40,8 +45,11 @@ export function createPageMetadata(title: string, description: string, path: str
       siteName: site.name,
       title: `${title} | ${site.name}`,
       description,
-      url: canonicalPath,
+      url: canonical,
       images: [socialImage],
     },
   };
 }
+
+/** Absolute homepage canonical — keep trailing slash (sitemap/schema parity). */
+export const homepageCanonical = `${site.url}/` as const;

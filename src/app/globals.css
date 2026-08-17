@@ -256,6 +256,7 @@ body:has(.cinematic-hero) .mobile-menu nav { color:var(--foreground); }
 .hero-word-wrap { display:block; overflow:hidden; padding-bottom:.08em; margin-bottom:-.08em; }.hero-word { display:block; }
 .cinematic-copy>p { width:min(620px,90%); margin:34px 0; color:#c1d4c8; font-size:18px; line-height:1.7; }
 .cinematic-copy .button-secondary { color:#fff; border-color:rgba(255,255,255,.34); }
+.cinematic-copy .button-secondary:hover { color:var(--green-700); background:#fff; border-color:#fff; }
 .box-stage { position:absolute; z-index:3; inset:0; pointer-events:none; perspective:900px; }
 .box-3d { --box:#b17a42; position:absolute; width:116px; height:102px; transform-style:preserve-3d; filter:drop-shadow(0 28px 25px rgba(0,0,0,.28)); }
 .box-front,.box-side,.box-top { position:absolute; display:block; background:var(--box); border:1px solid rgba(74,40,14,.22); }
