@@ -6,7 +6,7 @@ import { ClutterCompare } from "@/components/sections/clutter-compare";
 import { PremiumQuotePanel } from "@/components/sections/premium-quote-panel";
 import { EditorialIntro } from "@/components/sections/editorial-intro";
 import { JsonLd } from "@/components/seo/json-ld";
-import { createPageMetadata, homepageCanonical } from "@/data/site";
+import { createPageMetadata } from "@/data/site";
 import { webPageSchema, websiteSchema } from "@/data/schema";
 
 export const metadata = createPageMetadata(
@@ -19,8 +19,6 @@ const marqueeItems = ["Self Storage", "Business", "Moving", "Climate-Controlled"
 
 export default function HomePage() {
   return <>
-    {/* Emitted outside Metadata API so Next trailingSlash:false cannot strip the root slash. */}
-    <link rel="canonical" href={homepageCanonical} />
     <JsonLd data={[
       websiteSchema(),
       webPageSchema({

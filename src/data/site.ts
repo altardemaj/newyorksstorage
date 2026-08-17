@@ -27,17 +27,19 @@ const socialImage = {
   alt: "Organized storage boxes in a New York apartment",
 } as const;
 
+/** Absolute public URL. Homepage is origin with no trailing slash (Next trailingSlash:false). */
+export function absoluteUrl(path: string): string {
+  if (path === "/" || path === "") return site.url;
+  return `${site.url}${path.replace(/\/+$/, "")}`;
+}
+
 export function createPageMetadata(title: string, description: string, path: string): Metadata {
-  const isHome = path === "/" || path === "";
-  // Homepage canonical must be https://www.newyorksstorage.com/ (trailing slash)
-  // to match sitemap + schema. Next metadata resolution strips root "/" when
-  // trailingSlash:false, so homepage canonical is emitted via <link> in page.tsx.
-  const canonical = isHome ? `${site.url}/` : path.replace(/\/+$/, "");
+  const canonical = absoluteUrl(path);
 
   return {
     title,
     description,
-    ...(isHome ? {} : { alternates: { canonical } }),
+    alternates: { canonical },
     robots: { index: true, follow: true },
     openGraph: {
       type: "website",
@@ -50,6 +52,3 @@ export function createPageMetadata(title: string, description: string, path: str
     },
   };
 }
-
-/** Absolute homepage canonical — keep trailing slash (sitemap/schema parity). */
-export const homepageCanonical = `${site.url}/` as const;

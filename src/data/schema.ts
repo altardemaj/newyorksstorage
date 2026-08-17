@@ -1,4 +1,4 @@
-import { site } from "@/data/site";
+import { absoluteUrl, site } from "@/data/site";
 import type { StorageService } from "@/data/services";
 
 export const organizationId = `${site.url}/#organization`;
@@ -9,7 +9,7 @@ export function organizationSchema() {
     "@type": "SelfStorage",
     "@id": organizationId,
     name: site.name,
-    url: `${site.url}/`,
+    url: site.url,
     telephone: "+12124107300",
     email: site.email,
     address: {
@@ -37,7 +37,7 @@ export function websiteSchema() {
     "@type": "WebSite",
     "@id": `${site.url}/#website`,
     name: site.name,
-    url: `${site.url}/`,
+    url: site.url,
     publisher: { "@id": organizationId },
   };
 }
@@ -49,11 +49,12 @@ export function webPageSchema(opts: {
   type?: "WebPage" | "AboutPage" | "ContactPage" | "CollectionPage";
 }) {
   const type = opts.type ?? "WebPage";
+  const pageUrl = absoluteUrl(opts.path);
   return {
     "@context": "https://schema.org",
     "@type": type,
-    "@id": `${site.url}${opts.path === "/" ? "/" : opts.path}#webpage`,
-    url: `${site.url}${opts.path === "/" ? "/" : opts.path}`,
+    "@id": `${pageUrl === site.url ? `${site.url}/` : pageUrl}#webpage`,
+    url: pageUrl,
     name: opts.name,
     description: opts.description,
     isPartOf: { "@id": `${site.url}/#website` },
@@ -69,7 +70,7 @@ export function breadcrumbSchema(items: { name: string; path: string }[]) {
       "@type": "ListItem",
       position: index + 1,
       name: item.name,
-      item: `${site.url}${item.path === "/" ? "/" : item.path}`,
+      item: absoluteUrl(item.path),
     })),
   };
 }
