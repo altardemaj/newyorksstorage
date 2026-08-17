@@ -1,19 +1,5 @@
 import { site } from "@/data/site";
 
-const referralOptions = [
-  "Google",
-  "Stored with New York S. Storage before",
-  "Live locally / saw facility",
-  "Building management / super",
-  "Social media",
-  "Friend",
-  "Saw truck",
-  "Real estate agent",
-  "Yelp",
-  "Bing",
-  "Other",
-] as const;
-
 export function ContactForm() {
   return (
     <form className="contact-form" action={`mailto:${site.email}`} method="post" encType="text/plain">
@@ -25,12 +11,7 @@ export function ContactForm() {
         <label className="field-wide">Your message<textarea required name="message" rows={6} /></label>
         <label className="field-wide">
           How did you hear about us?
-          <select required name="how-did-you-hear-about-us" defaultValue="">
-            <option value="" disabled>Select an option</option>
-            {referralOptions.map((option) => (
-              <option key={option} value={option}>{option}</option>
-            ))}
-          </select>
+          <input required name="how-did-you-hear-about-us" placeholder="Google, friend, saw our facility…" />
         </label>
       </div>
       <button className="button button-primary" type="submit">Prepare message</button>
