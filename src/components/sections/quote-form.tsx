@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Icon } from "@/components/ui/icon";
+import { trackGenerateLead } from "@/lib/analytics";
 import { site } from "@/data/site";
 
 const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
@@ -44,6 +45,7 @@ export function QuoteForm() {
       const response = await fetch(WEB3FORMS_ENDPOINT, { method: "POST", body: data });
       const result = (await response.json()) as { success?: boolean };
       if (!response.ok || !result.success) throw new Error("Web3Forms rejected the submission.");
+      trackGenerateLead("storage_quote");
       setSubmissionState("success");
     } catch {
       setSubmissionState("error");

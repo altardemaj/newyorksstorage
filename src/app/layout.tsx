@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { MobileActions } from "@/components/layout/mobile-actions";
 import { JsonLd } from "@/components/seo/json-ld";
 import { organizationSchema } from "@/data/schema";
+import { GA_MEASUREMENT_ID } from "@/lib/analytics";
 import { site } from "@/data/site";
 import "./globals.css";
 
@@ -45,6 +47,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <MobileActions />
         <JsonLd data={organizationSchema()} />
       </body>
+      <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />
     </html>
   );
 }
