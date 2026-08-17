@@ -1,0 +1,50 @@
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
+import { MobileActions } from "@/components/layout/mobile-actions";
+import { JsonLd } from "@/components/seo/json-ld";
+import { organizationSchema } from "@/data/schema";
+import { site } from "@/data/site";
+import "./globals.css";
+
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
+const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
+  title: { default: "Self Storage in NYC & Harlem | New York S. Storage", template: "%s | New York S. Storage" },
+  description: "Flexible self storage in Harlem with unit sizes for apartments, moves, students, businesses, and specialty belongings. Get a free quote from New York S. Storage.",
+  verification: { google: "pFyhnxtzsFQ0upr4htgGTDU3BwChkXa6gD3RxYgfKoI" },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: site.name,
+    title: "Self Storage in NYC & Harlem | New York S. Storage",
+    description: "Flexible Manhattan storage, experienced advisors, packing, pickup, and delivery options.",
+    url: "/",
+    images: [{ url: "/nyc-storage-hero.jpg", width: 1200, height: 800, alt: "Organized storage boxes in a New York apartment" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Self Storage in NYC & Harlem | New York S. Storage",
+    description: "Flexible Manhattan storage with help from experienced local advisors.",
+    images: ["/nyc-storage-hero.jpg"],
+  },
+  robots: { index: true, follow: true },
+};
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body>
+        <a className="skip-link" href="#main-content">Skip to content</a>
+        <Header />
+        <main id="main-content">{children}</main>
+        <Footer />
+        <MobileActions />
+        <JsonLd data={organizationSchema()} />
+      </body>
+    </html>
+  );
+}
