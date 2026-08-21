@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Icon } from "@/components/ui/icon";
 import { trackGenerateLead } from "@/lib/analytics";
 import { site } from "@/data/site";
@@ -10,16 +10,45 @@ const WEB3FORMS_ACCESS_KEY = "4689b137-0f55-4ab4-89f3-8a740726b5a1";
 const initialForm = { address: "", date: "", size: "Not too sure", type: "Personal", items: "", duration: "3–6 months", details: "", firstName: "", lastName: "", email: "", phone: "", referral: "" };
 
 export function QuoteForm() {
+  const formRef = useRef<HTMLFormElement>(null);
   const [step, setStep] = useState(1);
   const [form, setForm] = useState(initialForm);
   const [submissionState, setSubmissionState] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const setField = (field: keyof typeof form, value: string) => setForm((current) => ({ ...current, [field]: value }));
-  const next = () => setStep((current) => Math.min(3, current + 1));
-  const previous = () => setStep((current) => Math.max(1, current - 1));
   const canContinue = step === 1 ? Boolean(form.address && form.date) : step === 2 ? Boolean(form.items) : true;
+
+  /** Validate only fields currently rendered for this step — never full-form submit. */
+  const validateCurrentStep = () => {
+    const formEl = formRef.current;
+    if (!formEl) return false;
+    const fields = formEl.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(
+      "input, select, textarea",
+    );
+    for (const field of fields) {
+      if (!field.checkValidity()) {
+        field.reportValidity();
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const goNext = () => {
+    if (!validateCurrentStep()) return;
+    setStep((current) => Math.min(3, current + 1));
+  };
+
+  const goBack = () => {
+    setStep((current) => Math.max(1, current - 1));
+  };
 
   const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    // Enter on steps 1–2 must advance, never submit the lead.
+    if (step !== 3) {
+      goNext();
+      return;
+    }
     if (submissionState === "submitting") return;
 
     setSubmissionState("submitting");
@@ -68,12 +97,75 @@ export function QuoteForm() {
     </div>;
   }
 
-  return <form className="quote-form" onSubmit={submit}>
-    <div className="form-progress"><div><span>Step {step} of 3</span><span>{step === 1 ? "Your storage" : step === 2 ? "What you're storing" : "Your details"}</span></div><div className="progress-track"><span style={{ width: `${step * 33.333}%` }} /></div></div>
-    {step === 1 && <fieldset><legend>Let’s start with the move</legend><div className="field-grid"><label>Current address<input required value={form.address} onChange={(e) => setField("address", e.target.value)} placeholder="Street address or neighborhood" /></label><label>When do you need storage?<input required type="date" value={form.date} onChange={(e) => setField("date", e.target.value)} /></label><label>Unit size<select value={form.size} onChange={(e) => setField("size", e.target.value)}><option>Not too sure</option><option>Small</option><option>Medium</option><option>Large</option><option>Commercial</option></select></label><label>Type of storage<select value={form.type} onChange={(e) => setField("type", e.target.value)}><option>Personal</option><option>Commercial</option></select></label></div></fieldset>}
-    {step === 2 && <fieldset><legend>Tell us about your items</legend><div className="field-grid"><label>What do you want to store?<select required value={form.items} onChange={(e) => setField("items", e.target.value)}><option value="">Select items</option><option>Furniture / household items</option><option>Personal effects</option><option>Documents / boxes</option><option>Heavy equipment</option><option>Other items</option></select></label><label>How long will you need storage?<select value={form.duration} onChange={(e) => setField("duration", e.target.value)}><option>A couple of months</option><option>3–6 months</option><option>6–12 months</option><option>12+ months</option><option>Indefinitely</option></select></label><label className="field-wide">Anything else we should know?<textarea value={form.details} onChange={(e) => setField("details", e.target.value)} placeholder="Elevator access, delicate items, pickup needs..." rows={5} /></label></div></fieldset>}
-    {step === 3 && <fieldset><legend>Where should we send your quote?</legend><div className="field-grid"><label>First name<input required autoComplete="given-name" value={form.firstName} onChange={(e) => setField("firstName", e.target.value)} /></label><label>Last name<input required autoComplete="family-name" value={form.lastName} onChange={(e) => setField("lastName", e.target.value)} /></label><label>Email<input required autoComplete="email" name="email" type="email" value={form.email} onChange={(e) => setField("email", e.target.value)} /></label><label>Phone<input required autoComplete="tel" type="tel" value={form.phone} onChange={(e) => setField("phone", e.target.value)} /></label><label className="field-wide">How did you hear about us?<input required value={form.referral} onChange={(e) => setField("referral", e.target.value)} placeholder="Google, friend, saw our facility…" /></label></div><p className="form-note">Your request will be sent securely to the New York S. Storage team.</p></fieldset>}
-    {submissionState === "error" && <p className="form-status form-status-error" role="alert">We couldn’t send your request. Please try again, or call <a href={site.phoneHref}>{site.phoneDisplay}</a> for immediate assistance.</p>}
-    <div className="form-actions">{step > 1 && <button type="button" className="button button-secondary" onClick={previous} disabled={submissionState === "submitting"}>Back</button>}{step < 3 ? <button type="button" className="button button-primary" onClick={next} disabled={!canContinue}>Continue <Icon name="arrow" className="button-icon" /></button> : <button type="submit" className="button button-primary" disabled={submissionState === "submitting"}>{submissionState === "submitting" ? "Sending…" : <>Submit quote request <Icon name="arrow" className="button-icon" /></>}</button>}</div>
-  </form>;
+  return (
+    <form className="quote-form" ref={formRef} onSubmit={submit}>
+      <div className="form-progress">
+        <div>
+          <span>Step {step} of 3</span>
+          <span>{step === 1 ? "Your storage" : step === 2 ? "What you're storing" : "Your details"}</span>
+        </div>
+        <div className="progress-track"><span style={{ width: `${step * 33.333}%` }} /></div>
+      </div>
+
+      {step === 1 && (
+        <fieldset>
+          <legend>Let’s start with the move</legend>
+          <div className="field-grid">
+            <label>Current address<input required value={form.address} onChange={(e) => setField("address", e.target.value)} placeholder="Street address or neighborhood" /></label>
+            <label>When do you need storage?<input required type="date" value={form.date} onChange={(e) => setField("date", e.target.value)} /></label>
+            <label>Unit size<select value={form.size} onChange={(e) => setField("size", e.target.value)}><option>Not too sure</option><option>Small</option><option>Medium</option><option>Large</option><option>Commercial</option></select></label>
+            <label>Type of storage<select value={form.type} onChange={(e) => setField("type", e.target.value)}><option>Personal</option><option>Commercial</option></select></label>
+          </div>
+        </fieldset>
+      )}
+
+      {step === 2 && (
+        <fieldset>
+          <legend>Tell us about your items</legend>
+          <div className="field-grid">
+            <label>What do you want to store?<select required value={form.items} onChange={(e) => setField("items", e.target.value)}><option value="">Select items</option><option>Furniture / household items</option><option>Personal effects</option><option>Documents / boxes</option><option>Heavy equipment</option><option>Other items</option></select></label>
+            <label>How long will you need storage?<select value={form.duration} onChange={(e) => setField("duration", e.target.value)}><option>A couple of months</option><option>3–6 months</option><option>6–12 months</option><option>12+ months</option><option>Indefinitely</option></select></label>
+            <label className="field-wide">Anything else we should know?<textarea value={form.details} onChange={(e) => setField("details", e.target.value)} placeholder="Elevator access, delicate items, pickup needs..." rows={5} /></label>
+          </div>
+        </fieldset>
+      )}
+
+      {step === 3 && (
+        <fieldset>
+          <legend>Where should we send your quote?</legend>
+          <div className="field-grid">
+            <label>First name<input required autoComplete="given-name" value={form.firstName} onChange={(e) => setField("firstName", e.target.value)} /></label>
+            <label>Last name<input required autoComplete="family-name" value={form.lastName} onChange={(e) => setField("lastName", e.target.value)} /></label>
+            <label>Email<input required autoComplete="email" name="email" type="email" value={form.email} onChange={(e) => setField("email", e.target.value)} /></label>
+            <label>Phone<input required autoComplete="tel" type="tel" value={form.phone} onChange={(e) => setField("phone", e.target.value)} /></label>
+            <label className="field-wide">How did you hear about us?<input required value={form.referral} onChange={(e) => setField("referral", e.target.value)} placeholder="Google, friend, saw our facility…" /></label>
+          </div>
+          <p className="form-note">Your request will be sent securely to the New York S. Storage team.</p>
+        </fieldset>
+      )}
+
+      {submissionState === "error" && (
+        <p className="form-status form-status-error" role="alert">
+          We couldn’t send your request. Please try again, or call <a href={site.phoneHref}>{site.phoneDisplay}</a> for immediate assistance.
+        </p>
+      )}
+
+      <div className="form-actions">
+        {step > 1 && (
+          <button key="back" type="button" className="button button-secondary" onClick={goBack} disabled={submissionState === "submitting"}>
+            Back
+          </button>
+        )}
+        {step < 3 ? (
+          <button key="continue" type="button" className="button button-primary" onClick={goNext} disabled={!canContinue}>
+            Continue <Icon name="arrow" className="button-icon" />
+          </button>
+        ) : (
+          <button key="submit" type="submit" className="button button-primary" disabled={submissionState === "submitting"}>
+            {submissionState === "submitting" ? "Sending…" : <>Submit quote request <Icon name="arrow" className="button-icon" /></>}
+          </button>
+        )}
+      </div>
+    </form>
+  );
 }
