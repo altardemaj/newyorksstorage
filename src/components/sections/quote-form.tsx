@@ -27,10 +27,11 @@ export function QuoteForm() {
     data.append("access_key", WEB3FORMS_ACCESS_KEY);
     data.append("subject", "New York S. Storage Quote Request");
     data.append("from_name", "New York S. Storage Website");
-    data.append("replyto", form.email);
+    // Do not set replyto/email/cc/bcc — those route Gmail Reply/Reply All to the customer.
+    // Customer email stays visible as normal form data only.
     data.append("First name", form.firstName);
     data.append("Last name", form.lastName);
-    data.append("email", form.email);
+    data.append("customer_email", form.email);
     data.append("Phone", form.phone);
     data.append("Current address", form.address);
     data.append("Move-in date", form.date);
